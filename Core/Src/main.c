@@ -24,7 +24,8 @@
 /* USER CODE BEGIN Includes */
 #include "stm32f429i_discovery_lcd.h"
 #include "stm32f429i_discovery_ts.h"
-
+#include "misc.h"
+#include "io.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -91,7 +92,7 @@ static void MX_SPI4_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+_io*com;
 /* USER CODE END 0 */
 
 /**
@@ -148,12 +149,18 @@ int main(void)
 
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 
+	com=ioUsart(&huart1, 128,128);
+	_stdio(com);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		int i=Escape();
+		_proc_loop();
+		if(i != EOF)
+			putchar(i);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
