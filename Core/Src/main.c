@@ -38,7 +38,7 @@
 #define LCD_FRAME_BUFFER_LAYER0                  (LCD_FRAME_BUFFER+0x130000)
 #define LCD_FRAME_BUFFER_LAYER1                  LCD_FRAME_BUFFER
 #define CONVERTED_FRAME_BUFFER                   (LCD_FRAME_BUFFER+0x260000)
-
+void 		test(void);
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -151,16 +151,15 @@ int main(void)
 
 	com=ioUsart(&huart1, 128,128);
 	_stdio(com);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		int i=Escape();
+		test();
 		_proc_loop();
-		if(i != EOF)
-			putchar(i);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -463,10 +462,10 @@ static void MX_TIM2_Init(void)
   {
     Error_Handler();
   }
-  sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
+  sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_BOTHEDGE;
   sConfigIC.ICSelection = TIM_ICSELECTION_DIRECTTI;
   sConfigIC.ICPrescaler = TIM_ICPSC_DIV1;
-  sConfigIC.ICFilter = 0;
+  sConfigIC.ICFilter = 8;
   if (HAL_TIM_IC_ConfigChannel(&htim2, &sConfigIC, TIM_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();

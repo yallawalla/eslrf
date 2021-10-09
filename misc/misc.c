@@ -94,7 +94,7 @@ _io* ioUsart(UART_HandleTypeDef *huart, int sizeRx, int sizeTx) {
 * Output				:
 * Return				:
 *******************************************************************************/
-int			Escape(void) {
+int		Escape(void) {
 int		i=fgetc(stdin);
 			if(stdin->io->esc == NULL)
 				stdin->io->esc=calloc(1,sizeof(esc));

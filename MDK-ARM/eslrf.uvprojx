@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc; ../Drivers/STM32F4xx_HAL_Driver/Inc; ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy; ../Drivers/CMSIS/Device/ST/STM32F4xx/Include; ../Drivers/CMSIS/Include; ..\Drivers\BSP\STM32F429I-Discovery; ..\Drivers\BSP\Components\stmpe811; ..\Drivers\BSP\Components\ili9341; ..\Utilities\Fonts; ..\misc</IncludePath>
+              <IncludePath>../Core/Inc;  ../Drivers/STM32F4xx_HAL_Driver/Inc;  ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;  ../Drivers/CMSIS/Include;  ..\Drivers\BSP\STM32F429I-Discovery;  ..\Drivers\BSP\Components\stmpe811;  ..\Drivers\BSP\Components\ili9341;  ..\Utilities\Fonts;  ..\misc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -607,6 +607,13 @@
         </Group>
         <Group>
           <GroupName>Eslrf</GroupName>
+          <Files>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\test.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>misc</GroupName>
