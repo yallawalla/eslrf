@@ -1,5 +1,6 @@
-#include <stdlib.h>
 #include "stm32f4xx_hal.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include "io.h"
 #include "misc.h"
 #include "ascii.h"
@@ -145,11 +146,13 @@ static int32_t getIc(uint32_t ic) {
 * Return				:
 *******************************************************************************/
 void	test(void) {
-	int32_t		ch;
 	_print("ESLRF test\r\n");
 	
+	nBaud=SystemCoreClock/baudrate-1;
 	if(!pwmbuf)	{
 		pwmbuf=malloc(1024*sizeof(uint16_t));
+		memcpy(pwmbuf,"\0xffff",sizeof(uint16_t));	//dummy edge, first CCR1 !!!
+		htim3.Instance->ARR=nBaud;
 		HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_1);
 		HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_3);
 		HAL_TIM_DMABurst_WriteStart(&htim3,TIM_DMABASE_CCR1,TIM_DMA_UPDATE,(uint32_t *)pwmbuf,TIM_DMABURSTLENGTH_3TRANSFERS);
@@ -163,15 +166,13 @@ void	test(void) {
 		HAL_TIM_IC_Start_DMA(&htim2,TIM_CHANNEL_2,  (uint32_t *)icbuf2->_buf, icbuf2->size/sizeof(uint32_t));
 	}
 	
-	nBaud=SystemCoreClock/baudrate-1;
-	htim3.Instance->ARR=nBaud;
 
 	while(1) {
-		ch = Escape();
-		switch (ch) {
+		switch (getchar()) {
 			case __Esc:
 				_print("exit...  "); 		
 				return;
+			case '1':
 			case __F1:
 				callW.opmode=ON;
 				callW.submode=NORMAL;
@@ -202,6 +203,8 @@ void	test(void) {
 				callW.submode=NORMAL;
 				sendCallW();
 				break;
+			case __CtrlY:
+				HAL_NVIC_SystemReset();
 			case EOF:
 			break;
 			default:
@@ -213,20 +216,19 @@ void	test(void) {
 			_buffer_put(icbuf1,&timeout,sizeof(uint32_t));
 			_buffer_put(icbuf2,&timeout,sizeof(uint32_t));
 		}
-		
+
 		icbuf1->_push = &icbuf1->_buf[(icbuf1->size - htim2.hdma[TIM_DMA_ID_CC1]->Instance->NDTR*sizeof(uint32_t))];
 		icbuf2->_push = &icbuf2->_buf[(icbuf2->size - htim2.hdma[TIM_DMA_ID_CC2]->Instance->NDTR*sizeof(uint32_t))];
-		while(_buffer_pull(icbuf1,&ch,sizeof(uint32_t))) {
+		for (int32_t ch=0; _buffer_pull(icbuf1,&ch,sizeof(uint32_t));) {
 			ch=getIc(ch);
 			if(ch != EOF) {
 				if(ch & 0x100)
 					_print("\r\n%02X ",ch & 0xff);
 				else
 					_print("%02X ",ch & 0xff);
-			}
+			} else break;
 		}	
 		_wait(2);
 		
 	} 
 }
-

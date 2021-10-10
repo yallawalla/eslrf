@@ -12,7 +12,6 @@
 HAL_StatusTypeDef	FLASH_Program(uint32_t, uint32_t);
 
 _io* 	  ioUsart(UART_HandleTypeDef *, int, int);
-int			Escape(void);
 
 #ifdef __cplusplus
 }

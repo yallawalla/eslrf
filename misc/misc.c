@@ -88,28 +88,3 @@ _io* ioUsart(UART_HandleTypeDef *huart, int sizeRx, int sizeTx) {
 	}
 	return io;
 }
-/*******************************************************************************
-* Function Name	: 
-* Description		: 
-* Output				:
-* Return				:
-*******************************************************************************/
-int		Escape(void) {
-int		i=fgetc(stdin);
-			if(stdin->io->esc == NULL)
-				stdin->io->esc=calloc(1,sizeof(esc));
-			if(i==__Esc) {
-				stdin->io->esc->seq=i;
-				stdin->io->esc->timeout=HAL_GetTick()+10;
-			} else if(i==EOF) {
-				if(stdin->io->esc->timeout && (HAL_GetTick() > stdin->io->esc->timeout)) {
-					stdin->io->esc->timeout=0;
-					return stdin->io->esc->seq;
-				}
-			} else if(stdin->io->esc->timeout) {
-				stdin->io->esc->seq=((stdin->io->esc->seq) << 8) | i;
-			} else {
-				return i;
-			}
-			return EOF;
-}
