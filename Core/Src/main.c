@@ -38,7 +38,7 @@
 #define LCD_FRAME_BUFFER_LAYER0                  (LCD_FRAME_BUFFER+0x130000)
 #define LCD_FRAME_BUFFER_LAYER1                  LCD_FRAME_BUFFER
 #define CONVERTED_FRAME_BUFFER                   (LCD_FRAME_BUFFER+0x260000)
-void 		test(void);
+void 		app(void);
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -145,11 +145,11 @@ int main(void)
 	BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
 	BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
 	BSP_LCD_SetFont(&Font16);
-	BSP_LCD_DisplayStringAt(5, 5, (uint8_t *)"ESLRF", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(5, 5, (uint8_t *)"...krneki", LEFT_MODE);
 
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 
-	com=ioUsart(&huart1, 128,128);
+	com=newCom(&huart1, 128,128);
 	_stdio(com);
 
   /* USER CODE END 2 */
@@ -158,7 +158,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		test();
+		app();
 		_proc_loop();
     /* USER CODE END WHILE */
 

@@ -54,7 +54,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
 * Output				:
 * Return				:
 *******************************************************************************/
-void	pollUsart(_io *io) {
+static void	comPoll(_io *io) {
 UART_HandleTypeDef *huart=io->huart;
 	if(huart == huart_err) {
 		HAL_UART_Receive_DMA(huart,(uint8_t*)io->rx->_buf,io->rx->size);
@@ -79,12 +79,12 @@ UART_HandleTypeDef *huart=io->huart;
 * Output				:
 * Return				:
 *******************************************************************************/
-_io* ioUsart(UART_HandleTypeDef *huart, int sizeRx, int sizeTx) {
+_io* newCom(UART_HandleTypeDef *huart, int sizeRx, int sizeTx) {
 	_io* io=_io_init(sizeRx,sizeTx);
 	if(io && huart) {
 		io->huart=huart;
 		HAL_UART_Receive_DMA(huart,(uint8_t*)io->rx->_buf,io->rx->size);
-		_proc_add(pollUsart,io,"uart",0);
+		_proc_add(comPoll,io,"com",0);
 	}
 	return io;
 }
