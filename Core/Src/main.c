@@ -26,6 +26,7 @@
 #include "stm32f429i_discovery_ts.h"
 #include "misc.h"
 #include "io.h"
+#include "l3gd20.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -87,7 +88,8 @@ static void MX_USART1_UART_Init(void);
 static void MX_I2C3_Init(void);
 static void MX_SPI4_Init(void);
 /* USER CODE BEGIN PFP */
-
+float			xyz[]={0,0,0};
+uint32_t	stat[3];
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -102,7 +104,6 @@ _io*com;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -151,6 +152,17 @@ int main(void)
 
 	com=newCom(&huart1, 128,128);
 	_stdio(com);
+  if((L3gd20Drv.ReadID() == I_AM_L3GD20) || (L3gd20Drv.ReadID() == I_AM_L3GD20_TR))
+  {
+		uint16_t ctrl = (uint16_t) (L3GD20_MODE_ACTIVE  | L3GD20_OUTPUT_DATARATE_1 | L3GD20_AXES_ENABLE | L3GD20_BANDWIDTH_4);
+    ctrl |= (uint16_t) ((L3GD20_BlockDataUpdate_Continous | L3GD20_BLE_LSB |  L3GD20_FULLSCALE_500) << 8);
+		L3gd20Drv.Init(ctrl);
+		
+//		ctrl = (uint8_t) ((L3GD20_HPM_NORMAL_MODE_RES | L3GD20_HPFCF_0));
+//    L3gd20Drv.FilterConfig(ctrl) ;
+//    L3gd20Drv.FilterCmd(L3GD20_HIGHPASSFILTER_ENABLE);
+	}
+
 
   /* USER CODE END 2 */
 
@@ -158,6 +170,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		if(L3GD20_GetDataStatus() & 0x7) {
+			L3gd20Drv.GetXYZ(xyz);
+			stat[0] = HAL_GetTick()-stat[1];
+			stat[1] = HAL_GetTick();
+		}
 		app();
 		_proc_loop();
     /* USER CODE END WHILE */

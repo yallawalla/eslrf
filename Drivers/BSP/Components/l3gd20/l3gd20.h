@@ -322,3 +322,9 @@ extern GYRO_DrvTypeDef L3gd20Drv;
 #endif /* __L3GD20_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/ 
+/*
+https://cpp.hotexamples.com/examples/-/-/L3GD20_Init/cpp-l3gd20_init-function-examples.html
+http://www.lirmm.fr/~bosio/L3/TP4/main.c
+https://github.com/nitsky/stm32-example/blob/master/stm32/discovery/src/stm32f3_discovery_l3gd20.c
+
+*/

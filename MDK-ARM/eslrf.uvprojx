@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>STM32F429ZITx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F4xx_DFP.2.14.0</PackID>
+          <PackID>Keil.STM32F4xx_DFP.2.15.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x2002FFFF) IRAM2(0x10000000-0x1000FFFF) IROM(0x8000000-0x81FFFFF) CLOCK(25000000) FPU2 CPUTYPE("Cortex-M4") TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;       ../Drivers/STM32F4xx_HAL_Driver/Inc;       ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;       ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;       ../Drivers/CMSIS/Include;       ..\Drivers\BSP\STM32F429I-Discovery;       ..\Drivers\BSP\Components\stmpe811;       ..\Drivers\BSP\Components\ili9341;       ..\Utilities\Fonts;       ..\misc</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Drivers\BSP\STM32F429I-Discovery;..\Drivers\BSP\Components\stmpe811;..\Drivers\BSP\Components\ili9341;..\Drivers\BSP\Components\l3gd20;..\Utilities\Fonts;..\misc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -653,6 +653,11 @@
               <FileName>stmpe811.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\BSP\Components\stmpe811\stmpe811.c</FilePath>
+            </File>
+            <File>
+              <FileName>l3gd20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\BSP\Components\l3gd20\l3gd20.c</FilePath>
             </File>
           </Files>
         </Group>
